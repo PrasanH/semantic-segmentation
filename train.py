@@ -7,11 +7,16 @@ import yaml
 
 from models import DeepLabWrapper
 from utils import get_dataloader, Trainer
+torch.backends.cudnn.enabled = True
+torch.backends.cudnn.benchmark = True
+
+torch.autograd.set_detect_anomaly(True)  # track vanishing/exploding grads
+
 
 
 if __name__ == '__main__':
 
-    with open('config/config.yaml', 'r') as f:
+    with open('config/train_config.yaml', 'r') as f:
         config = yaml.safe_load(f)
 
     # create an output directory for the model if one doesn't exist
@@ -21,13 +26,14 @@ if __name__ == '__main__':
     dataloaders = get_dataloader(config['DATA_PATH'],
                                  batch_size=config['BATCH_SIZE'],
                                  resize_shape=(config['IMG_HEIGHT'], config['IMG_WIDTH']))
-
+    
+    print('dataloaders', dataloaders)
     # create the model
     model = DeepLabWrapper(backbone=config['BACKBONE'], num_mask_channels=config['NUM_MASK_CHANNELS'])
 
     # train the model
     criterion = torch.nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(model.parameters, lr=1e-4)
+    optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
     trainer = Trainer(model, dataloaders, criterion, optimizer,
                       num_epochs=config['NUM_EPOCHS'],
                       is_inception=config['IS_INCEPTION'])

@@ -68,7 +68,7 @@ class DeepLabWrapper(pl.LightningModule):
 
         self.cuda = torch.cuda.is_available()
 
-        self.parameters = self.model.parameters()
+        #self.parameters = self.model.parameters()
 
         if self.cuda:
             self.model.to('cuda')
@@ -103,6 +103,9 @@ class DeepLabWrapper(pl.LightningModule):
 
         Returns:
             None
+
+        Note: https://pytorch.org/hub/pytorch_vision_deeplabv3_resnet101/ 
+        mean and std values are specified here 
         """
         self.model = torch.load(self.model_path)
         if eval:

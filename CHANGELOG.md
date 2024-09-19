@@ -1,8 +1,5 @@
 # CHANGELOG for Semantic-Segmentation
 
-### v3.0.1 - (Nate Haddad, 8/26/2024)
-* Add `report.pdf`
-
 ### v3.0.0 - (Nate Haddad, 12/17/2022)
 * Add `process_video.py` script to process video data
 * Refactor models into a `DeepLabWrapper` class
