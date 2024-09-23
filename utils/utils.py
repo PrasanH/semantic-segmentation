@@ -332,16 +332,20 @@ def create_custom_colormap() -> np.ndarray:
     Returns:
         np.ndarray: A colormap for visualizing segmentation results with custom colors.
     """
-    # Define custom colors for each label
+    # custom colors for each label
     custom_colors = [
-        [0, 0, 0],  # Label 0: Black (e.g., background) non traversable
-        [139, 69, 19],  # Label 1: Rough trail: Brown
-        [245, 245, 220],  # Label 2: Smooth trail: Beige
-        [0, 255, 0],  # Label 3: Traversable grass: Bright Green
-        [0, 128, 128],  # Label 4: Low vegetation: Olive Green
-        [255, 165, 0],  # Label 5: Obstacle: Orange
-        [34, 139, 34],  # Label 6: High vegetation: Forest Green
-        [135, 206, 235],  # Label 7: Sky: Sky Blue
+        [0, 149,200],  # Label 0: sky
+        [120,187,255],  # Label 1: rock
+        [120,113,0],  # Label 2: vegetation
+        [228,196,80],  # Label 3: landscape_terrain
+        [136,97,0],  # Label 4: wall
+        [175,175,175],  # Label 5: vehicle
+        [158,158,158],  # Label 6: tree trunk
+        [165,63,0],  # Label 7: mountain
+        [43, 144, 145]  # 8: barn 
+        [31,31,31]  #9 building
+        [131,131,131] #10 roadside object
+        [0,0,0]  # 11 unlabeled 
         # Add more custom colors as needed for each label up to 255
     ]
 

@@ -10,9 +10,7 @@ from utils import get_dataloader, Trainer
 torch.backends.cudnn.enabled = True
 torch.backends.cudnn.benchmark = True
 
-torch.autograd.set_detect_anomaly(True)  # track vanishing/exploding grads
-
-
+torch.autograd.set_detect_anomaly(True)
 
 if __name__ == '__main__':
 

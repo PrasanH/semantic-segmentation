@@ -123,7 +123,7 @@ class Trainer:
                     ).item()
 
                 print("len", len(self.dataloaders[phase].dataset))
-
+                
                 epoch_loss = running_loss / len(self.dataloaders[phase].dataset)
                 epoch_mean_iou = running_mean_iou / len(self.dataloaders[phase])
                 print(

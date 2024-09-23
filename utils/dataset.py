@@ -176,7 +176,8 @@ class UnrealDataset(VisionDataset):
         image = image.convert("RGB")
 
         # Load the mask
-        mask = Image.open(mask_path).convert("L")
+        mask = Image.open(mask_path)
+        mask = mask.convert("RGB")  # Ensure the mask is in RGB format
         mask = np.array(mask)
 
         # Resize the mask if needed
@@ -187,46 +188,54 @@ class UnrealDataset(VisionDataset):
                 interpolation=cv2.INTER_NEAREST,
             )
         
-        sky = [142]
-        rock = [147, 148]
-        vegetation = [174]
-        landscape_terrain = list(range(94, 103))
-        wall = [191]
-        vehicle = list(range(175, 186))
-        tree_trunk = [158]
-        furniture = list(range(57, 94))
-        barn = [43, 144, 145, 146]
-        building = list(range(31, 37))
-        roadside_object = list(range(130, 142))
+        sky = [0, 149,200]
+        rock = [120,187,255]
+        vegetation = [120,113,0]
+        landscape_terrain = [228,196,80]
+        wall = [136,97,0]
+        vehicle = [[175,175,175],[176,176,176]]  #changeme
+        tree_trunk = [158,158,158]  #changeme
+        mountain = [165,63,0]
+        barn = [43, 144, 145]   #changeme
+        building =  [[31,31,31],[32,32,32]]  #changeme
+        roadside_object =  [[131,131,131],[132,132,132]]  #changeme
 
-        defined_categories = set(sky + rock + vegetation + landscape_terrain + wall + vehicle + tree_trunk + furniture + barn + building + roadside_object)
-        all_labels = set(range(195))
-        unlabeled = list(all_labels - defined_categories)
+        num_classes = 12
 
-        # Initialize a shader_map-like array for masks (12 classes)
-        masks = np.zeros((12, self.image_height, self.image_width), dtype=np.float32)
+        one_hot_mask = np.zeros((num_classes, self.image_height, self.image_width), dtype=np.float32)
 
-        # Populate the masks array
-        masks[0] = np.isin(mask, sky).astype(np.float32)
-        masks[1] = np.isin(mask, rock).astype(np.float32)
-        masks[2] = np.isin(mask, vegetation).astype(np.float32)
-        masks[3] = np.isin(mask, landscape_terrain).astype(np.float32)
-        masks[4] = np.isin(mask, wall).astype(np.float32)
-        masks[5] = np.isin(mask, vehicle).astype(np.float32)
-        masks[6] = np.isin(mask, tree_trunk).astype(np.float32)
-        masks[7] = np.isin(mask, furniture).astype(np.float32)
-        masks[8] = np.isin(mask, barn).astype(np.float32)
-        masks[9] = np.isin(mask, building).astype(np.float32)
-        masks[10] = np.isin(mask, roadside_object).astype(np.float32)
-        masks[11] = np.isin(mask, unlabeled).astype(np.float32)
-        # Prepare the sample
-        sample = {"image": image, "mask": masks}
+
+        # Helper function to match RGB values
+        def match_category(rgb_values, class_id):
+            for rgb in rgb_values:
+                mask_match = np.all(mask == rgb, axis=-1)
+                one_hot_mask[class_id][mask_match] = 1
+
+        # Map RGB values to classes
+        match_category([sky], 0)
+        match_category([rock], 1)
+        match_category([vegetation], 2)
+        match_category([landscape_terrain], 3)
+        match_category([wall], 4)
+        match_category(vehicle, 5)
+        match_category([tree_trunk], 6)
+        match_category([mountain], 7)
+        match_category([barn], 8)
+        match_category(building, 9)
+        match_category(roadside_object, 10)
+
+        # Any remaining pixels (not categorized) are considered 'unlabeled'
+        one_hot_mask[11][np.all(one_hot_mask[:11] == 0, axis=0)] = 1
+        
+        sample = {"image": image, "mask": one_hot_mask}
 
         # Apply any transformations if provided
         if self.transforms:
             sample["image"] = self.transforms(sample["image"])
             sample["mask"] = torch.as_tensor(sample["mask"], dtype=torch.uint8)
 
+
+        #print('sample shape', sample['mask'].shape)
         return sample
 
 
