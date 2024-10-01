@@ -131,3 +131,6 @@ dmypy.json
 # Project specific
 data/
 out/
+log_losses/
+wandb/
+

@@ -334,23 +334,24 @@ def create_custom_colormap() -> np.ndarray:
     """
     # custom colors for each label
     custom_colors = [
-        [0, 149,200],  # Label 0: sky
-        [120,187,255],  # Label 1: rock
-        [120,113,0],  # Label 2: vegetation
-        [228,196,80],  # Label 3: landscape_terrain
-        [136,97,0],  # Label 4: wall
-        [175,175,175],  # Label 5: vehicle
-        [158,158,158],  # Label 6: tree trunk
-        [165,63,0],  # Label 7: mountain
-        [43, 144, 145]  # 8: barn 
-        [31,31,31]  #9 building
-        [131,131,131] #10 roadside object
-        [0,0,0]  # 11 unlabeled 
+        [0, 149, 200],  # Label 0: sky
+        [120, 187, 255],  # Label 1: rock
+        [120, 113, 0],  # Label 2: vegetation
+        [228, 196, 80],  # Label 3: landscape_terrain
+        [136, 97, 0],  # Label 4: wall
+        [175, 175, 175],  # Label 5: vehicle
+        [158, 158, 158],  # Label 6: tree trunk
+        [165, 63, 0],  # Label 7: mountain
+        [43, 144, 145],  # 8: barn
+        [31, 31, 31],  # 9 building
+        [131, 131, 131],  # 10 roadside object
+        [0, 0, 0],  # 11 unlabeled
         # Add more custom colors as needed for each label up to 255
     ]
 
     # Create a colormap array and fill with custom colors
     colormap = np.zeros((256, 3), dtype=int)  # 256 possible labels with RGB
+    colormap[:] = [0, 0, 0]
     for i, color in enumerate(custom_colors):
         colormap[i] = color
 

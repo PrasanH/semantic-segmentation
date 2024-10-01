@@ -193,10 +193,10 @@ class UnrealDataset(VisionDataset):
         vegetation = [120,113,0]
         landscape_terrain = [228,196,80]
         wall = [136,97,0]
-        vehicle = [[175,175,175],[176,176,176]]  #changeme
+        vehicle = [[169,0,45],[176,176,176]]  
         tree_trunk = [158,158,158]  #changeme
         mountain = [165,63,0]
-        barn = [43, 144, 145]   #changeme
+        barn = [136, 97, 0]  
         building =  [[31,31,31],[32,32,32]]  #changeme
         roadside_object =  [[131,131,131],[132,132,132]]  #changeme
 
