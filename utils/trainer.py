@@ -79,11 +79,6 @@ class Trainer:
         self.deeplab.model.to(device)
 
         log_df = pd.DataFrame(columns=['epoch', 'phase', 'loss', 'mIoU'])
-
-        # Get the current date and time for the log filename
-        timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-
-        
         log_dir = 'log_losses'   # directory for logging loss df
         if not os.path.exists(log_dir):
             os.makedirs(log_dir)
@@ -161,12 +156,10 @@ class Trainer:
 
 
                 if phase == 'train':
-                    wandb.log({"epoch": epoch+1, "Training_Loss": epoch_loss})
-                    wandb.log({"epoch": epoch+1, "Training_mIoU": epoch_mean_iou})
-
+                    wandb.log({"Training_Loss": epoch_loss,"Training_mIoU": epoch_mean_iou})
+                    
                 if phase == 'valid':
-                    wandb.log({"epoch": epoch+1, "Validation_Loss": epoch_loss})
-                    wandb.log({"epoch": epoch+1, "Validation_mIoU": epoch_mean_iou})
+                    wandb.log({"Validation_Loss": epoch_loss,"Validation_mIoU": epoch_mean_iou})
 
                 # deep copy the model
                 if phase == "valid" and epoch_mean_iou > best_mean_iou:
@@ -177,10 +170,8 @@ class Trainer:
 
             print()
 
-            # Save the log DataFrame to CSV after each epoch (appending without header)
-            log_df.to_csv(log_file_path, mode='a', header=not os.path.exists(log_file_path), index=False)
             
-            # Clear the log DataFrame for the next epoch
+            log_df.to_csv(log_file_path, mode='a', header=not os.path.exists(log_file_path), index=False)
             log_df = pd.DataFrame(columns=["epoch", "phase", "loss", "mean_iou"])
 
         time_elapsed = time.time() - since
