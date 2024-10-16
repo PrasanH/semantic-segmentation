@@ -189,18 +189,10 @@ class UnrealDataset(VisionDataset):
             )
         
         sky = [0, 149,200]
-        rock = [120,187,255]
+        obstacle = [[120,187,255], [136,97,0],[158,158,158] ,[165,63,0],[136, 97, 0] , [31,31,31],[32,32,32],[131,131,131],[132,132,132],[169,0,45],[176,176,176]]
         vegetation = [120,113,0]
         landscape_terrain = [228,196,80]
-        wall = [136,97,0]
-        vehicle = [[169,0,45],[176,176,176]]  
-        tree_trunk = [158,158,158]  #changeme
-        mountain = [165,63,0]
-        barn = [136, 97, 0]  
-        building =  [[31,31,31],[32,32,32]]  #changeme
-        roadside_object =  [[131,131,131],[132,132,132]]  #changeme
-
-        num_classes = 12
+        num_classes = 4
 
         one_hot_mask = np.zeros((num_classes, self.image_height, self.image_width), dtype=np.float32)
 
@@ -213,19 +205,13 @@ class UnrealDataset(VisionDataset):
 
         # Map RGB values to classes
         match_category([sky], 0)
-        match_category([rock], 1)
+        match_category(obstacle, 1)
         match_category([vegetation], 2)
         match_category([landscape_terrain], 3)
-        match_category([wall], 4)
-        match_category(vehicle, 5)
-        match_category([tree_trunk], 6)
-        match_category([mountain], 7)
-        match_category([barn], 8)
-        match_category(building, 9)
-        match_category(roadside_object, 10)
-
-        # Any remaining pixels (not categorized) are considered 'unlabeled'
-        one_hot_mask[11][np.all(one_hot_mask[:11] == 0, axis=0)] = 1
+    
+        # Any remaining pixels (not categorized) are considered obstacles
+        uncategorized_pixels = np.all(one_hot_mask == 0, axis=0)
+        one_hot_mask[1][uncategorized_pixels] = 1
         
         sample = {"image": image, "mask": one_hot_mask}
 

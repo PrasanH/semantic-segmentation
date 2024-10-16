@@ -9,8 +9,8 @@ IMG_WIDTH: 957
 
 # Hyperparameters
 NUM_EPOCHS: 5
-NUM_MASK_CHANNELS: 12
+NUM_MASK_CHANNELS: 4
 BATCH_SIZE: 4
 LEARNING_RATE: 1e-4
 IS_INCEPTION: true
-BACKBONE: mobilenetv3large # mobilenetv3large, resnet50, resnet101
+BACKBONE: resnet101 # mobilenetv3large, resnet50, resnet101
