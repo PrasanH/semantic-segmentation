@@ -61,3 +61,10 @@ Run `python process_video.py` to run a standalone inference session on videos.
 [6] Pan, S.J.; Yang, Q. A survey on transfer learning. IEEE Trans. Knowl. Data Eng. 2010, 22, 1345–1359  
 
 [7] M. S. Minhas, “Transfer Learning for Semantic Segmentation using PyTorch DeepLabv3,” GitHub.com/msminhas93, 12-Sep-2019. [Online]. Available: https://github.com/msminhas93/DeepLabv3FineTuning.
+
+
+
+
+## Extra Information 
+
+Can use a batch size of 32 for mobnetv3 , img size (956*526)

@@ -10,7 +10,7 @@ from utils import get_dataloader, Trainer
 torch.backends.cudnn.enabled = True
 torch.backends.cudnn.benchmark = True
 
-torch.autograd.set_detect_anomaly(True)
+#torch.autograd.set_detect_anomaly(True)
 
 if __name__ == '__main__':
 
@@ -30,8 +30,20 @@ if __name__ == '__main__':
     model = DeepLabWrapper(backbone=config['BACKBONE'], num_mask_channels=config['NUM_MASK_CHANNELS'])
 
     # train the model
-    criterion = torch.nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
+    
+    class_weights = torch.tensor([0.25,0.5,0.1,0.15]).float()
+    #class_weights = torch.tensor([0.080,0.9,0.008,0.012]).float()
+
+    # Move class weights to the appropriate device (GPU or CPU)
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    class_weights = class_weights.to(device)
+
+    # Initialize the criterion with class weights
+    criterion = torch.nn.CrossEntropyLoss(weight=class_weights)
+
+    #criterion = torch.nn.CrossEntropyLoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr=1e-4, weight_decay=1e-4)
+
     trainer = Trainer(model, dataloaders, criterion, optimizer,
                       num_epochs=config['NUM_EPOCHS'],
                       is_inception=config['IS_INCEPTION'])
