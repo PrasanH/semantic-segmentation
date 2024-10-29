@@ -205,7 +205,7 @@ class UnrealDataset(VisionDataset):
 
         # Map RGB values to classes
         match_category([sky], 0)
-        match_category(obstacle, 1)
+        #match_category(obstacle, 1)
         match_category([vegetation], 2)
         match_category([landscape_terrain], 3)
     

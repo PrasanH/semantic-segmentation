@@ -6,23 +6,25 @@ from collections import Counter
 
 # Define RGB values for each class
 sky = torch.tensor([0, 149, 200], device='cuda')
+'''
 obstacle = torch.tensor([[120, 187, 255], [136, 97, 0], [158, 158, 158], [165, 63, 0], 
                          [136, 97, 0], [31, 31, 31], [32, 32, 32], [131, 131, 131], 
                          [132, 132, 132], [169, 0, 45], [176, 176, 176]], device='cuda')
+'''
 vegetation = torch.tensor([120, 113, 0], device='cuda')
 landscape_terrain = torch.tensor([228, 196, 80], device='cuda')
 
 # Mapping function using CUDA tensors
 def rgb_to_class_tensor(mask_tensor):
-    class_mask = torch.zeros(mask_tensor.shape[:2], dtype=torch.int, device='cuda')
-    # Assign each class based on pixel values
-    class_mask[(mask_tensor == sky).all(dim=-1)] = 0
-    for obs_color in obstacle:
-        class_mask[(mask_tensor == obs_color).all(dim=-1)] = 1
-    class_mask[(mask_tensor == vegetation).all(dim=-1)] = 2
-    class_mask[(mask_tensor == landscape_terrain).all(dim=-1)] = 3
+    class_mask = torch.full(mask_tensor.shape[:2], -1, dtype=torch.int, device='cuda')  # Start with -1 for uncategorized pixels
 
-    class_mask[class_mask == -1] = 1  ##rest of them add as obstacle
+    # Assign each class based on pixel values
+    class_mask[(mask_tensor == sky).all(dim=-1)] = 0  # Sky
+    class_mask[(mask_tensor == vegetation).all(dim=-1)] = 2  # Vegetation
+    class_mask[(mask_tensor == landscape_terrain).all(dim=-1)] = 3  # Landscape
+
+    # Any remaining pixels (still -1) are considered obstacles
+    class_mask[class_mask == -1] = 1  # Obstacle class
 
     return class_mask
 

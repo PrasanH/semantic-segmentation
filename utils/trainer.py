@@ -12,7 +12,8 @@ from datetime import datetime
 import pandas as pd
 import os
 import wandb
-wandb.init(project="Semseg")
+import torch.nn.functional as F
+wandb.init(project="Semseg_new")
 
 class Trainer:
     """This class trains DeepLab models given a configuration of hyperparameters
@@ -117,7 +118,7 @@ class Trainer:
                             outputs = self.deeplab.model(inputs)
                             loss1 = self.criterion(outputs["out"], label)
                             loss2 = self.criterion(outputs["aux"], label)
-                            loss = loss1 + 0.4 * loss2
+                            loss = loss1 + 0.2 * loss2
                         else:
                             outputs = self.deeplab.model(inputs)
                             outputs["out"] = outputs["out"].to(device)

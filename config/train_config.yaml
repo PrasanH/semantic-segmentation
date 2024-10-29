@@ -1,16 +1,16 @@
 # Paths
-DATA_PATH: data/unreal_images_sample/
-SAVE_MODEL_PATH: runs/model_unreal_forest_sep23.pt # Comment this out to autoname models
-LOAD_MODEL_PATH: runs/mobilenetv3large_v1.50.pt
+DATA_PATH: data/unreal_images/
+SAVE_MODEL_PATH: runs_new/model_resnet101_oct28_520.pt # Comment this out to autoname models
+#LOAD_MODEL_PATH: runs/mobilenetv3large_v1.50.pt
 
 # Image resize variables
-IMG_HEIGHT: 526
-IMG_WIDTH: 957
+IMG_HEIGHT: 520  #526   
+IMG_WIDTH: 520 #957   
 
 # Hyperparameters
-NUM_EPOCHS: 5
+NUM_EPOCHS: 10
 NUM_MASK_CHANNELS: 4
 BATCH_SIZE: 4
-LEARNING_RATE: 1e-4
-IS_INCEPTION: true
+LEARNING_RATE: 1e-3
+IS_INCEPTION: false  #true
 BACKBONE: resnet101 # mobilenetv3large, resnet50, resnet101
