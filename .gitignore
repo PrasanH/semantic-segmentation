@@ -134,3 +134,4 @@ out/
 log_losses/
 wandb/
 runs_new/
+logs/
