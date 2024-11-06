@@ -31,18 +31,18 @@ if __name__ == '__main__':
 
     # train the model
     
-    #class_weights = torch.tensor([0.25,0.5,0.1,0.15]).float()
-    class_weights = torch.tensor([0.235,0.56,0.065,0.14]).float()
+    
+    #class_weights = torch.tensor([0.235,0.56,0.065,0.14]).float()
 
     # Move class weights to the appropriate device (GPU or CPU)
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    class_weights = class_weights.to(device)
+    #class_weights = class_weights.to(device)
 
     # Initialize the criterion with class weights
-    criterion = torch.nn.CrossEntropyLoss(weight=class_weights)
+    #criterion = torch.nn.CrossEntropyLoss(weight=class_weights, label_smoothing= 0.1)
 
-    #criterion = torch.nn.CrossEntropyLoss(reduction='mean')   
-    optimizer = torch.optim.Adam(model.parameters(), betas=(0.89, 0.998), lr=1e-4, weight_decay=1e-4)
+    criterion = torch.nn.CrossEntropyLoss()   
+    optimizer = torch.optim.Adam(model.parameters(), betas=(0.90, 0.999), lr=1e-4, weight_decay=1e-4)
 
     trainer = Trainer(model, dataloaders, criterion, optimizer,
                       num_epochs=config['NUM_EPOCHS'],

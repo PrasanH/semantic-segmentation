@@ -134,4 +134,5 @@ out/
 log_losses/
 wandb/
 runs_new/
-logs/
+logs
+runs/shitty_runs
