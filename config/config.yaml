@@ -1,7 +1,7 @@
 # Paths
-DATA_PATH: data/unreal_images/simulated/images/
+DATA_PATH: H:\semseg_fork\semantic-segmentation\data\unreal_images\valid\images\
 #SAVE_MODEL_PATH: runs/model_v0.1.pt # Comment this out to autoname models
-LOAD_MODEL_PATH: runs_new/model_resnet101_oct28_224.pt
+LOAD_MODEL_PATH: runs_new/model_mobnet_oct30_520.pt
 
 # Image resize variables
 IMG_HEIGHT: 520 #526

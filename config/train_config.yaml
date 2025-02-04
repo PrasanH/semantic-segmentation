@@ -1,16 +1,16 @@
 # Paths
-DATA_PATH: data/unreal_images/
-SAVE_MODEL_PATH: runs_new/model_resnet101_oct28_520.pt # Comment this out to autoname models
+DATA_PATH: data/nov_24_training/ienet_350k_80_real/
+SAVE_MODEL_PATH: runs/exp/res50_2511_ie_350k_real_e10.pt # Comment this out to autoname models
 #LOAD_MODEL_PATH: runs/mobilenetv3large_v1.50.pt
 
 # Image resize variables
-IMG_HEIGHT: 520  #526   
-IMG_WIDTH: 520 #957   
+IMG_HEIGHT: 526 #526   
+IMG_WIDTH: 957 #957   
 
 # Hyperparameters
 NUM_EPOCHS: 10
 NUM_MASK_CHANNELS: 4
-BATCH_SIZE: 4
-LEARNING_RATE: 1e-3
-IS_INCEPTION: false  #true
-BACKBONE: resnet101 # mobilenetv3large, resnet50, resnet101
+BATCH_SIZE: 16
+LEARNING_RATE: 1e-4
+IS_INCEPTION: true  #true
+BACKBONE: resnet50 # mobilenetv3large, resnet50, resnet101

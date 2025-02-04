@@ -4,6 +4,20 @@ import numpy as np
 import albumentations as A
 import random
 
+"""
+Carries out augmentation to the images and the corresponding labels in the image and label folder defined 
+
+Check what all augmnetations you need for your use in the function get_augmentation_pipeline()
+
+the code adds a randomly generated number as a subscript to the augmented image and labels (same for the corresponding pairs)
+
+also, adds _Camera0_visible for images and _Camera0_class for the label images 
+
+Define your input and output folders at the end of this file
+
+"""
+
+
 # Define the augmentation pipeline using Albumentations
 def get_augmentation_pipeline():
     return A.Compose([
@@ -62,9 +76,14 @@ def augment_images_with_labels(image_folder, label_folder, output_image_folder, 
             print(f"Augmented {filename} and saved as {new_filename}")
 
 # Example usage
-image_folder = '/home/pdhegde/semseg_git_fork/semantic-segmentation/data/unreal_images/train/images/'
-label_folder = '/home/pdhegde/semseg_git_fork/semantic-segmentation/data/unreal_images/train/labels/'
-output_image_folder = '/home/pdhegde/semseg_git_fork/semantic-segmentation/data/unreal_images/train/aug/images/'
-output_label_folder = '/home/pdhegde/semseg_git_fork/semantic-segmentation/data/unreal_images/train/aug/labels/'
+image_folder = '/home/pdhegde/semseg_git_fork/semantic-segmentation/data/Nov_24/ienet2_380k/train/'
+label_folder = '/home/pdhegde/semseg_git_fork/semantic-segmentation/data/Nov_24/labels_for_the_fakes_1500/train/'
+
+#image_folder = '/home/pdhegde/semseg_git_fork/semantic-segmentation/data/Nov_24/nov_24_img_labels/train/images/'
+#label_folder = '/home/pdhegde/semseg_git_fork/semantic-segmentation/data/Nov_24/nov_24_img_labels/train/labels'
+
+
+output_image_folder = '/home/pdhegde/semseg_git_fork/semantic-segmentation/data/nov_24_training/ienet2_380k/train/images/'
+output_label_folder = '/home/pdhegde/semseg_git_fork/semantic-segmentation/data/nov_24_training/ienet2_380k/train/labels'
 
 augment_images_with_labels(image_folder, label_folder, output_image_folder, output_label_folder)

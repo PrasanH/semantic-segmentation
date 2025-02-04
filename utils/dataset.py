@@ -101,7 +101,9 @@ class YamahaCMUDataset(VisionDataset):
 
 
 class UnrealDataset(VisionDataset):
-    """A class that represents the Unreal engine offroad dataset
+    """
+    
+    A class that represents the Unreal engine simulation offroad dataset
     Classes:
         0: Sky [0, 149, 200]
         1: Obstacles (anything not explicitly classified as sky, vegetation, or landscape)
@@ -117,7 +119,9 @@ class UnrealDataset(VisionDataset):
         mask_names: List of corresponding mask paths
         logger: logging.Logger
             Logger instance for tracking dataset operations
+
     """
+
     class_colors = {
         'sky': [0, 149, 200],
         'vegetation': [120, 113, 0],
